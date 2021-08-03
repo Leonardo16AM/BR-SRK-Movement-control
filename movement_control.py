@@ -87,9 +87,10 @@ def pulsa_e():
             
              
 
-hotkeys = { 'w': pulsa_w ,'s': pulsa_s,'a': pulsa_a,'d': pulsa_d,'e': pulsa_e,'q': pulsa_q}
 
+if __name__=='__main__':
+    hotkeys = { 'w': pulsa_w ,'s': pulsa_s,'a': pulsa_a,'d': pulsa_d,'e': pulsa_e,'q': pulsa_q}
 
-with keyboard.GlobalHotKeys(hotkeys) as escuchador:
-    print("Iniciando...")
-    escuchador.join()
+    with keyboard.GlobalHotKeys(hotkeys) as escuchador:
+        print("Iniciando...")
+        escuchador.join()
