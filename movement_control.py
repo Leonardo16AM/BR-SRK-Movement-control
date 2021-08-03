@@ -78,6 +78,8 @@ def pulsa_e():
     while True:
         d=distance()
         if d<50:
+            if d<5:
+                return
             m1.ChangeDutyCycle(10)
             m2.ChangeDutyCycle(10)
             print("Objeto encontrado a menos de 35cm")

@@ -1,0 +1,53 @@
+html{
+    background-color: rgb(25, 21, 27);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input{
+    border:none;
+    border-radius: 10px;
+}
+
+
+input:hover, input:active{
+    background-color: grey;
+}
+
+#w{
+    font-size: 100px;
+}
+
+
+#a{
+    font-size: 100px;
+}
+#s{
+    margin-left :10px;
+    font-size: 100px;
+}
+#d{
+    margin-left :10px;
+    font-size: 100px;
+}
+
+#auto{
+    margin:20px;
+    font-size: 50px;
+}
+
+
+.fst_block{
+    margin-left :115px;
+    margin-bottom :15px;
+    margin-top :30px;
+}
+
+
+.scd_block{
+    margin-left :49px;
+}
+
+
+.auto{
+    margin-left :40px;
+}
