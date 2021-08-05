@@ -13,6 +13,6 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
     Change execution command of web_app in movement_control.py and run movement_control
 
 
- >The motors used in the proyect are hacked servomotors
+ >The motors used in the proyect are hacked servomotors  
  >Tested on Raspberry Pi 3B
  
