@@ -14,7 +14,4 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
 
 
  >The motors used in the proyect are hacked servomotors  
- >Tested on Raspberry pi 3B
 
-
- 

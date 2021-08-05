@@ -99,8 +99,8 @@ if __name__=='__main__':
     if order=='Y' or order =='y':
         print(termcolor.colored("Starting webpage","blue"))
         
-        '''Only windows:'''
-        os.system( 'start /B C:/Users/leona/anaconda3/python.exe c:/Users/leona/OneDrive/Documents/GitHub/BR-SRK-Movement-control/web_app.py')
+        '''Only Linux:'''
+        os.system( 'python3 web_app.py &')
         
         print(termcolor.colored("HTTP Server started on port 5000","cyan"))
         while True:
