@@ -1,8 +1,11 @@
 from pynput import keyboard
 import RPi.GPIO as GPIO
+import termcolor
 import time
+import os
 import board
 from adafruit_motorkit import MotorKit
+import subprocess as sp
 
 kit = MotorKit(i2c=board.I2C())
 
@@ -91,8 +94,36 @@ def pulsa_e():
 
 
 if __name__=='__main__':
-    hotkeys = { 'w': pulsa_w ,'s': pulsa_s,'a': pulsa_a,'d': pulsa_d,'e': pulsa_e,'q': pulsa_q}
+    order=input(termcolor.colored("Do you want to bouild a webpage to control(Y/N)?\n","blue"))
 
-    with keyboard.GlobalHotKeys(hotkeys) as escuchador:
-        print("Iniciando...")
-        escuchador.join()
+    if order=='Y' or order =='y':
+        print(termcolor.colored("Starting webpage","blue"))
+        
+        '''Only windows:'''
+        os.system( 'start /B C:/Users/leona/anaconda3/python.exe c:/Users/leona/OneDrive/Documents/GitHub/BR-SRK-Movement-control/web_app.py')
+        
+        print(termcolor.colored("HTTP Server started on port 5000","cyan"))
+        while True:
+            time.sleep(0.1)
+            with open('socket.txt','r') as socket:
+                val=socket.read()    
+                if val=='e':
+                    pulsa_e()
+                if val=='a':
+                    pulsa_a()
+                if val=='s':
+                    pulsa_s()
+                if val=='d':
+                    pulsa_d()
+                if val=='w':
+                    pulsa_w()
+    else:
+        print(termcolor.colored("Controling by keyboard","blue"))
+        hotkeys = { 'w': pulsa_w ,'s': pulsa_s,'a': pulsa_a,'d': pulsa_d,'e': pulsa_e,'q': pulsa_q}
+
+        with keyboard.GlobalHotKeys(hotkeys) as escuchador:
+            print(termcolor.colored("Iniciando...","green"))
+            escuchador.join()
+                
+
+
