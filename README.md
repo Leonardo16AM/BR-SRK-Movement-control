@@ -10,9 +10,11 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
  - HC-SR04 Trigger: 23
  
 ### Usage: 
-    Change execution command of web_app in movement_control.py and run movement_control
+    Run movement_control
 
 
  >The motors used in the proyect are hacked servomotors
- >Tested on windows
+ >Tested on Raspberry pi 3B
+
+
  
