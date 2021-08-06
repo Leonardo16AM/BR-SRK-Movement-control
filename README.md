@@ -1,5 +1,5 @@
 # BR-SRK-Movement-control
-Raspberry Pi code for control of movement of a car with two motors.  
+Raspberry Pi code to control the movement of a car with two motors.  
 Also contains module for distance measure with HC-SR04 and autonomous conduction mode.
 
 
@@ -10,8 +10,8 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
  - HC-SR04 Trigger: 23
  
 ### Usage: 
-    Run movement_control
+    Run movement_control.py
 
 
  >The motors used in the proyect are hacked servomotors  
- >change host in web_app to your ip to be visible on local network 
+ >Change host in web_app to your ip to be visible on local network 
