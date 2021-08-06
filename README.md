@@ -14,4 +14,4 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
 
 
  >The motors used in the proyect are hacked servomotors  
-
+ >change host in web_app to your ip to be visible on local network 
