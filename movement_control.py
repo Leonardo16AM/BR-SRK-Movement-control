@@ -139,7 +139,7 @@ if __name__=='__main__':
         hotkeys = { 'w': press_w ,'s': press_s,'a': press_a,'d': press_d,'e': press_e,'q': press_q}
 
         with keyboard.GlobalHotKeys(hotkeys) as escuchador:
-            print(termcolor.colored("Starting...","green"))
+            print(colored("Starting...","green"))
             escuchador.join()
                 
 
