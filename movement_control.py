@@ -1,11 +1,16 @@
 from pynput import keyboard
-import RPi.GPIO as GPIO
-import termcolor
+from termcolor import colored
+
 import time
 import os
 import board
-from adafruit_motorkit import MotorKit
 import subprocess as sp
+import socket
+
+import RPi.GPIO as GPIO
+from adafruit_motorkit import MotorKit
+
+
 
 kit = MotorKit(i2c=board.I2C())
 
@@ -43,41 +48,32 @@ def distance():
  
     TimeElapsed = StopTime - StartTime
     distance = (TimeElapsed * 34300) / 2
- 
     return distance
 
-def pulsa_w():
+def press_w():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(10)
-    print('Se ha pulsado W')
 
-def pulsa_s():
+def press_s():
     m1.ChangeDutyCycle(10)
     m2.ChangeDutyCycle(5)
-    print('Se ha pulsado S')
 
-def pulsa_a():
-    
+def press_a():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(5)
-    print('Se ha pulsado A')
     
 
-def pulsa_d():
-    
+def press_d():
     m1.ChangeDutyCycle(10)
     m2.ChangeDutyCycle(10)
-    print('Se ha pulsado D')
     
-def pulsa_q(): 
+def press_q(): 
     m1.ChangeDutyCycle(0)
     m2.ChangeDutyCycle(0)
-    print('Se ha pulsado Q')
     
-def pulsa_e():
+def press_e():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(10)
-    print('Se ha activado el modo automatico (Beta)')
     while True:
         d=distance()
         if d<50:
@@ -90,39 +86,60 @@ def pulsa_e():
             m1.ChangeDutyCycle(5)
             m2.ChangeDutyCycle(10)
             
-             
 
 
 if __name__=='__main__':
-    order=input(termcolor.colored("Do you want to bouild a webpage to control(Y/N)?\n","blue"))
+    order=input(colored("Do you want to build a webpage to control(Y/N)?\n","blue"))
 
     if order=='Y' or order =='y':
-        print(termcolor.colored("Starting webpage","blue"))
+        print(colored("Starting webpage","blue"))
+
+        s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((socket.gethostname(),1234))
         
         '''Only Linux:'''
         os.system( 'python3 web_app.py &')
         
-        print(termcolor.colored("HTTP Server started on port 5000","cyan"))
+        print(colored("HTTP Server started on port 5000","cyan"))
+        
+        prev=None
         while True:
-            time.sleep(0.1)
-            with open('socket.txt','r') as socket:
-                val=socket.read()    
-                if val=='e':
-                    pulsa_e()
-                if val=='a':
-                    pulsa_a()
-                if val=='s':
-                    pulsa_s()
-                if val=='d':
-                    pulsa_d()
-                if val=='w':
-                    pulsa_w()
+            s.listen(1)
+            client_socket,adress=s.accept()
+            val=client_socket.recv(100)
+            val=val.decode("utf-8")
+
+            if val=='e':
+                if val!=prev:
+                    print( colored("Pressed: Auto","cyan") )
+                    prev=val
+                # press_e()
+            if val=='a':
+                if val!=prev:
+                    print( colored("Pressed: A","cyan") )
+                    prev=val
+                # press_a()
+            if val=='s':
+                if val!=prev:
+                    print( colored("Pressed: S","cyan") )
+                    prev=val
+                # press_s()
+            if val=='d':
+                if val!=prev:
+                    print( colored("Pressed: D","cyan") )
+                    prev=val
+                # press_d()
+            if val=='w':
+                if val!=prev:
+                    print( colored("Pressed: W","cyan") )
+                    prev=val
+                # press_w()
     else:
-        print(termcolor.colored("Controling by keyboard","blue"))
-        hotkeys = { 'w': pulsa_w ,'s': pulsa_s,'a': pulsa_a,'d': pulsa_d,'e': pulsa_e,'q': pulsa_q}
+        print(colored("Controling by keyboard","blue"))
+        hotkeys = { 'w': press_w ,'s': press_s,'a': press_a,'d': press_d,'e': press_e,'q': press_q}
 
         with keyboard.GlobalHotKeys(hotkeys) as escuchador:
-            print(termcolor.colored("Iniciando...","green"))
+            print(termcolor.colored("Starting...","green"))
             escuchador.join()
                 
 
