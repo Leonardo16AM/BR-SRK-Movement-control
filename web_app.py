@@ -22,7 +22,7 @@ def index():
         return render_template('index.html')
     else:
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((socket.gethostname(), 1234))
+        s.connect((socket.gethostname(), 12332))
         if request.form.get('w')=='W':
             s.send(b'w')
             return render_template('index.html')
