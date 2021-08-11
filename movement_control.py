@@ -6,7 +6,7 @@ import os
 import board
 import subprocess as sp
 import socket
-
+import turtle
 import RPi.GPIO as GPIO
 from adafruit_motorkit import MotorKit
 
@@ -32,6 +32,11 @@ GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
+
+prev_time=None
+prev="w"
+
+
 def distance():
     GPIO.output(GPIO_TRIGGER, True)
     time.sleep(0.5)
@@ -50,27 +55,32 @@ def distance():
     distance = (TimeElapsed * 34300) / 2
     return distance
 
+
 def press_w():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(10)
+    pass
 
 def press_s():
     m1.ChangeDutyCycle(10)
     m2.ChangeDutyCycle(5)
+    pass
 
 def press_a():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(5)
-    
+    pass    
 
 def press_d():
     m1.ChangeDutyCycle(10)
     m2.ChangeDutyCycle(10)
-    
+    pass
+
 def press_q(): 
     m1.ChangeDutyCycle(0)
     m2.ChangeDutyCycle(0)
-    
+    pass
+
 def press_e():
     m1.ChangeDutyCycle(5)
     m2.ChangeDutyCycle(10)
@@ -84,7 +94,8 @@ def press_e():
             print("Objeto encontrado a menos de 35cm")
             time.sleep(1)
             m1.ChangeDutyCycle(5)
-            m2.ChangeDutyCycle(10)
+            m2.ChangeDutyCycle(10) 
+    pass
             
 
 
@@ -95,10 +106,10 @@ if __name__=='__main__':
         print(colored("Starting webpage","blue"))
 
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((socket.gethostname(),1234))
+        s.bind((socket.gethostname(),12332))
         
         '''Only Linux:'''
-        os.system( 'python3 web_app.py &')
+        # os.system( 'python3 web_app.py &')
         
         print(colored("HTTP Server started on port 5000","cyan"))
         
@@ -135,12 +146,74 @@ if __name__=='__main__':
                     prev=val
                 # press_w()
     else:
-        print(colored("Controling by keyboard","blue"))
-        hotkeys = { 'w': press_w ,'s': press_s,'a': press_a,'d': press_d,'e': press_e,'q': press_q}
+        
+        screenr = turtle.Screen()
 
-        with keyboard.GlobalHotKeys(hotkeys) as escuchador:
-            print(termcolor.colored("Starting...","green"))
-            escuchador.join()
-                
+        brsrk = turtle.Turtle()
+
+        screenr.title("BR-SRK Mapping")
+        brsrk.pensize(3)
+        brsrk.shapesize(2,2,2)
+        brsrk.fillcolor("red")
+
+
+        def draw(ch):
+            global prev_time,prev            
+            global brsrk
+            ti=time.time()
+            dif=ti-prev_time
+            print(dif)
+            if prev=="w":
+                brsrk.forward(25.5*dif)
+            if prev=="s":
+                brsrk.backward(25.5*dif)
+            if prev=="a":
+                brsrk.left(163*dif)
+            if prev=="d":
+                brsrk.right(163*dif)
+            prev=ch
+            prev_time=ti
+
+
+        def kpress_w():
+            draw('w')
+            m1.ChangeDutyCycle(5)
+            m2.ChangeDutyCycle(10)
+            pass
+
+        def kpress_s():
+            draw('s')  
+            m1.ChangeDutyCycle(10)
+            m2.ChangeDutyCycle(5)
+            pass
+
+        def kpress_a():
+            draw('a')
+            m1.ChangeDutyCycle(5)
+            m2.ChangeDutyCycle(5)
+            pass    
+
+        def kpress_d():
+            draw('d')
+            m1.ChangeDutyCycle(10)
+            m2.ChangeDutyCycle(10)
+            pass
+
+        def kpress_f():
+            draw(prev)
+
+
+        screenr.onkey(kpress_w, "w")
+        screenr.onkey(kpress_s, "s")
+        screenr.onkey(kpress_d, "d")
+        screenr.onkey(kpress_a, "a")
+        screenr.onkey(kpress_f, "f")
+
+        prev_time=time.time()
+        prev='w'
+        kpress_w()
+        screenr.listen()
+        turtle.mainloop()
+
 
 
