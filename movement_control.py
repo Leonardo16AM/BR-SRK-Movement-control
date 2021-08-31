@@ -111,6 +111,10 @@ if __name__=='__main__':
         '''Only Linux:'''
         # os.system( 'python3 web_app.py &')
         
+        try:
+            os.system( 'python3 camera-stream.py &')
+        except Exception:
+            pass
         print(colored("HTTP Server started on port 5000","cyan"))
         
         prev=None
