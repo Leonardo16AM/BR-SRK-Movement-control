@@ -11,7 +11,7 @@ Also contains module for distance measure with HC-SR04 and autonomous conduction
  
 ### Usage: 
     Run movement_control.py
-
+    if Camera stram fails go to the [Proyect GitHub](https://github.com/Leonardo16AM/BR-SRK-Camera-network-viewer)
 
  >The motors used in the proyect are hacked servomotors  
  >Change host in web_app to your ip to be visible on local network 
