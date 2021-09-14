@@ -108,14 +108,19 @@ if __name__=='__main__':
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((socket.gethostname(),12332))
         
-        '''Only Linux:'''
-        # os.system( 'python3 web_app.py &')
+        try:
+            os.system( 'python3 camera-stream.py &')
+            print(colored("HTTP Server started on port 5000","cyan"))
+        except Exception:
+            print(colored("Error starting HTTP Server on port 5000","red"))
+        
         
         try:
             os.system( 'python3 camera-stream.py &')
+            print(colored("Started Camera stream on port 5555","cyan"))
         except Exception:
-            pass
-        print(colored("HTTP Server started on port 5000","cyan"))
+            print(colored("Error starting Camera stream on port 5555","red"))
+      
         
         prev=None
         while True:
@@ -128,28 +133,36 @@ if __name__=='__main__':
                 if val!=prev:
                     print( colored("Pressed: Auto","cyan") )
                     prev=val
-                # press_e()
+                press_e()
             if val=='a':
                 if val!=prev:
                     print( colored("Pressed: A","cyan") )
                     prev=val
-                # press_a()
+                press_a()
             if val=='s':
                 if val!=prev:
                     print( colored("Pressed: S","cyan") )
                     prev=val
-                # press_s()
+                press_s()
             if val=='d':
                 if val!=prev:
                     print( colored("Pressed: D","cyan") )
                     prev=val
-                # press_d()
+                press_d()
             if val=='w':
                 if val!=prev:
                     print( colored("Pressed: W","cyan") )
                     prev=val
-                # press_w()
+                press_w()
     else:
+        
+        
+        try:
+            os.system( 'python3 camera-stream.py &')
+            print(colored("Started Camera stream on port 5555","cyan"))
+        except Exception:
+            print(colored("Error starting Camera stream on port 5555","red"))
+        
         
         screenr = turtle.Screen()
 
